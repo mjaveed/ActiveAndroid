@@ -26,6 +26,7 @@ import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.lang.Exception;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
@@ -175,7 +176,11 @@ public final class DatabaseHelper extends SQLiteOpenHelper {
 						final int version = Integer.valueOf(file.replace(".sql", ""));
 
 						if (version > oldVersion && version <= newVersion) {
-							executeSqlScript(db, file);
+							try {
+								executeSqlScript(db, file);
+							}catch (Exception e){
+								e.printStackTrace();
+							}
 							migrationExecuted = true;
 
 							Log.i(file + " executed succesfully.");
